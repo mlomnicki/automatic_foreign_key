@@ -29,6 +29,14 @@ module AutomaticForeignKey
   mattr_accessor :auto_index
   @@auto_index = nil
 
+  # Create a FK for every column with a name ending in _id (default true)
+  mattr_accessor :auto_fk
+  @@auto_fk = true
+
+  # Create a self reference to the table if a column is named parent_id
+  mattr_accessor :auto_self_referential_fk
+  @@auto_self_referential_fk = true
+
   def self.setup(&block)
     yield self
   end

@@ -149,6 +149,8 @@ For customization purposes create config/initializers/automatic_foreign_key.rb f
     config.auto_index = true # create indices on FKs by default
     config.on_update = :cascade # cascade as default on_update action
     config.on_delete = :restrict # restrict as default on_delete action
+	config.auto_fk = false # create FKs for every column ending with _id.
+	config.auto_self_referential_fk = false # create a self reference to the table for parent_id column.
   end
 
 === Rails 3 compatibility
