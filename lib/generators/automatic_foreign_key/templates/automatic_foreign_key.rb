@@ -12,5 +12,11 @@ AutomaticForeignKey.setup do |config|
   # It's relevant for PostgreSQL only.
   # MySQL engines auto-index foreign keys by default
   # config.auto_index = true
+  #
+  # Auto create foreign keys for every column with a name ending in _id.
+  # config.auto_fk = true
+  #
+  # Auto create a self reference to the table if a column is named parent_id.
+  # config.auto_self_referential_fk = true
 
 end

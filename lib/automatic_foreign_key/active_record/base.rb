@@ -25,12 +25,12 @@ module AutomaticForeignKey::ActiveRecord
           references = options[:references]
           references = [references, :id] unless references.nil? || references.is_a?(Array)
           references
-        elsif column_name == 'parent_id'
-          [table_name, :id]
-        elsif column_name =~ /^(.*)_id$/
-          determined_table_name = ActiveRecord::Base.pluralize_table_names ? $1.to_s.pluralize : $1
-          [determined_table_name, :id]
-        end
+	    elsif AutomaticForeignKey.auto_self_referential_fk and column_name == 'parent_id'
+			  [table_name, :id]
+		elsif AutomaticForeignKey.auto_fk and column_name =~ /^(.*)_id$/
+			  determined_table_name = ActiveRecord::Base.pluralize_table_names ? $1.to_s.pluralize : $1
+			  [determined_table_name, :id]
+		end
       end
     end
   end
