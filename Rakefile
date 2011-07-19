@@ -29,15 +29,16 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+DBNAME = "afk_unittest"
 namespace :postgresql do
   desc 'Build the PostgreSQL test databases'
   task :build_databases do
-    %x( createdb -E UTF8 afk_unittest )
+    %x( createdb -E UTF8 #{DBNAME} )
   end
 
   desc 'Drop the PostgreSQL test databases'
   task :drop_databases do
-    %x( dropdb afk_unittest )
+    %x( dropdb #{DBNAME} )
   end
 
   desc 'Rebuild the PostgreSQL test databases'
@@ -52,12 +53,12 @@ MYSQL_DB_USER = 'afk'
 namespace :mysql do
   desc 'Build the MySQL test databases'
   task :build_databases do
-    %x( echo "create DATABASE afk_unittest DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci " | mysql --user=#{MYSQL_DB_USER})
+    %x( echo "create DATABASE #{DBNAME} DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci " | mysql --user=#{MYSQL_DB_USER})
   end
 
-  desc 'Drop the MySQL test databases' 
+  desc 'Drop the MySQL test databases'
   task :drop_databases do
-    %x( mysqladmin --user=#{MYSQL_DB_USER} -f drop afk_unittest )
+    %x( mysqladmin --user=#{MYSQL_DB_USER} -f drop #{DBNAME} )
   end
 
   desc 'Rebuild the MySQL test databases'
