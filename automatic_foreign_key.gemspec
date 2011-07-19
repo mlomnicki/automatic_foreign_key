@@ -23,9 +23,10 @@ constraints when creating tables or adding columns. It uses SQL-92 syntax and as
   s.add_dependency("activerecord", ">= 2")
   s.add_dependency("redhillonrails_core", "~> 1.1.2")
       
-  s.add_development_dependency("rspec", "~> 2.4.0")
+  s.add_development_dependency("rspec", "~> 2.6.0")
   s.add_development_dependency("pg")
   s.add_development_dependency("mysql")
-  s.add_development_dependency("mysql2")
+  s.add_development_dependency("mysql2", "~> 0.2.11")
+  s.add_development_dependency("rake")
 end
 
