@@ -163,6 +163,11 @@ For customization purposes create config/initializers/automatic_foreign_key.rb f
 
 * RedHill on Rails Core (redhillonrails_core).
 
+=== Support
+
+Don't hesitate to ask questions on our mailing list.
+http://groups.google.com/group/rails-db
+
 === NOTE
 
 * Code was created by harukizaemon(http://github.com/harukizaemon) but is not supported currently by him.
