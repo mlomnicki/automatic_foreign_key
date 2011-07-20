@@ -54,7 +54,7 @@ describe ActiveRecord::Migration do
                    :state => { :index => {:with => :city} } ) 
       @model.should have_index.on([:state, :city])
     end
-    
+
     it "should auto-index foreign keys only" do
       AutomaticForeignKey.auto_index = true
       create_table(@model,  :user_id => {},
@@ -182,17 +182,6 @@ describe ActiveRecord::Migration do
       AutomaticForeignKey.on_delete = nil
     end
 
-    protected
-    def add_column(column_name, *args)
-      table = @model.table_name
-      ActiveRecord::Migration.suppress_messages do
-        ActiveRecord::Migration.add_column(table, column_name, *args)
-        @model.reset_column_information
-        yield if block_given?
-        ActiveRecord::Migration.remove_column(table, column_name)
-      end
-    end
-
   end
 
   context "when column is changed" do
@@ -225,18 +214,40 @@ describe ActiveRecord::Migration do
       end
 
     end
-    
-    protected
-    def change_column(column_name, *args)
-      table = @model.table_name
-      ActiveRecord::Migration.suppress_messages do
-        ActiveRecord::Migration.change_column(table, column_name, *args)
-        @model.reset_column_information
+
+    context "when disabled" do
+
+      before do
+        @model = Post
       end
+
+      around do |example|
+        disable(&example)
+      end
+
+      it "should not create foreign key for created table" do
+        create_table(@model, :user_id => {})
+        @model.should_not reference.on(:user_id)
+      end
+
+      it "should not create foreign for added column" do
+        create_table(@model, {})
+        add_column(:user_id, :integer) do
+          @model.should_not reference.on(:user_id)
+        end
+      end
+
+      it "should not create foreign key for changed column" do
+        create_table(@model, :user_id => { :references => nil })
+        change_column(:user_id, :integer)
+        @model.should_not reference.on(:user_id)
+      end
+
     end
 
   end
-    
+
+  protected
   def foreign_key(model, column)
     columns = Array(column).collect(&:to_s)
     model.foreign_keys.detect { |fk| fk.table_name == model.table_name && fk.column_names == columns } 
@@ -250,6 +261,34 @@ describe ActiveRecord::Migration do
         end
       end
       model.reset_column_information
+    end
+  end
+
+  def add_column(column_name, *args)
+    table = @model.table_name
+    ActiveRecord::Migration.suppress_messages do
+      ActiveRecord::Migration.add_column(table, column_name, *args)
+      @model.reset_column_information
+      yield if block_given?
+      ActiveRecord::Migration.remove_column(table, column_name)
+    end
+  end
+
+  def change_column(column_name, *args)
+    table = @model.table_name
+    ActiveRecord::Migration.suppress_messages do
+      ActiveRecord::Migration.change_column(table, column_name, *args)
+      @model.reset_column_information
+    end
+  end
+
+  def disable(&block)
+    old_value = AutomaticForeignKey.disable
+    AutomaticForeignKey.disable = true
+    begin
+      yield
+    ensure
+      AutomaticForeignKey.disable = old_value
     end
   end
 

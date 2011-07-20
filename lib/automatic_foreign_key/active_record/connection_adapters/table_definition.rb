@@ -20,16 +20,18 @@ module AutomaticForeignKey::ActiveRecord::ConnectionAdapters
 
     def column_with_automatic_foreign_key(name, type, options = {})
       column_without_automatic_foreign_key(name, type, options)
-      references = ActiveRecord::Base.references(self.name, name, options)
-      if references
-        AutomaticForeignKey.set_default_update_and_delete_actions!(options)
-        foreign_key(name, references.first, references.last, options) 
-        if index = afk_index_options(options)
-          # append [column_name, index_options] pair
-          self.indices << [name, AutomaticForeignKey.options_for_index(index)]
+      unless AutomaticForeignKey.disable
+        references = ActiveRecord::Base.references(self.name, name, options)
+        if references
+          AutomaticForeignKey.set_default_update_and_delete_actions!(options)
+          foreign_key(name, references.first, references.last, options) 
+          if index = afk_index_options(options)
+            # append [column_name, index_options] pair
+            self.indices << [name, AutomaticForeignKey.options_for_index(index)]
+          end
+        elsif options[:index]
+          self.indices << [name, AutomaticForeignKey.options_for_index(options[:index])]
         end
-      elsif options[:index]
-        self.indices << [name, AutomaticForeignKey.options_for_index(options[:index])]
       end
       self
     end

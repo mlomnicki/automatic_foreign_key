@@ -12,5 +12,8 @@ AutomaticForeignKey.setup do |config|
   # It's relevant for PostgreSQL only.
   # MySQL engines auto-index foreign keys by default
   # config.auto_index = true
+  #
+  # Disable automatic foreign key creation.
+  # config.disable = true
 
 end

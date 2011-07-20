@@ -19,15 +19,20 @@ module AutomaticForeignKey
 
   end
 
-  # Default FK update action 
+  # Default FK update action
   mattr_accessor :on_update
-  
-  # Default FK delete action 
+
+  # Default FK delete action
   mattr_accessor :on_delete
 
   # Create an index after creating FK (default false)
   mattr_accessor :auto_index
   @@auto_index = nil
+
+  # Disable automatic foreign key creation.
+  # Useful for disabling automatic foreign keys in development env
+  # but enabling in test and production.
+  mattr_accessor :disable
 
   def self.setup(&block)
     yield self
