@@ -21,7 +21,7 @@ constraints when creating tables or adding columns. It uses SQL-92 syntax and as
   s.require_paths = ["lib"]
 
   s.add_dependency("activerecord", ">= 2")
-  s.add_dependency("redhillonrails_core", "~> 1.1.2")
+  s.add_dependency("redhillonrails_core", "~> 1.1")
       
   s.add_development_dependency("rspec", "~> 2.6.0")
   s.add_development_dependency("pg")
