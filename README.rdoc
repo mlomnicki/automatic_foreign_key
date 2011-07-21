@@ -9,13 +9,24 @@ options to the schema column definition statements.
 
 === Installation
 
-As a gem
-    
-  gem install automatic_foreign_key
+    gem install automatic_foreign_key
+    rails generate automatic_foreign_key:install
 
-...or as a plugin
+=== Rails 3.1 compatibility
 
-  script/plugin install http://github.com/mlomnicki/automatic_foreign_key.git
+You need at least 1.3.0 version.
+Also explicit reference to redhillonrails_core 2.0.0.pre must be set.
+
+    gem "automatic_foreign_key", "~> 1.3.0"
+    gem "redhillonrails_core", "~> 2.0.0.pre"
+
+=== Rails 3.0 compatibility
+
+Fully compatible with Rails 3.
+
+=== Rails 2.x compatibility
+
+Only generator is not compatible
 
 === Usage
 
@@ -83,7 +94,7 @@ would be misinterpreted as a foreign-key (say for example if you named the prima
 
 There is also a generator for creating foreign keys on a database that currently has none:
 
-  ruby script/generate foreign_key_migration
+  ruby rails generate automatic_foreign_key:migration
 
 The plugin fully supports and understands the following active-record
 configuration properties:
@@ -92,7 +103,7 @@ configuration properties:
 * <code>config.active_record.table_name_prefix</code>
 * <code>config.active_record.table_name_suffix</code>
 
-=== Auto Indices 
+=== Auto Indices
 
 It's very common to create an index on foreign key. You can instruct
 AutomaticForeignKey to add an index after adding foreign key.
@@ -114,7 +125,7 @@ If you want to pass some options for index use hash params.
 Auto indexing option is useless for MySQL users as their RDBMS adds indices on foreign
 keys by default. However PostgreSQL users may have fun with that feature.
 
-=== Column Indices 
+=== Column Indices
 
 You can create an index on any column by specifying the +:index+ option.
 
@@ -149,15 +160,9 @@ For customization purposes create config/initializers/automatic_foreign_key.rb f
     config.auto_index = true # create indices on FKs by default
     config.on_update = :cascade # cascade as default on_update action
     config.on_delete = :restrict # restrict as default on_delete action
+
+    config.disable = false # set to true if you want to disable auto foreign keys
   end
-
-=== Rails 3 compatibility
-
-    Automatic foreign key is fully compatible with Rails 3.
-
-=== Rails 2.x compatibility
-    
-    Everything but generator is compatible
 
 === Dependencies
 
@@ -175,5 +180,5 @@ http://groups.google.com/group/rails-db
 
 === License
 
-This plugin is copyright 2010 by Michał Łomnicki and is released
+This plugin is copyright 2011 by Michał Łomnicki and is released
 under the MIT license.
