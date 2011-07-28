@@ -7,6 +7,18 @@ compatible with most databases that support foreign-key constraints.
 As a bonus, the extension also allows you to create indices on columns via
 options to the schema column definition statements.
 
+== SchemaPlus - new and better automatic_foreign_key
+
+automatic_foreign_key is deprecated and SchemaPlus[https://github.com/lomba/schema_plus] is its successor.
+SchemaPlus is based on automatic_foreign_key code but it is more flexible and new
+features are added only there. API isn't changed so migration should be very
+easy. Visit http://github.com/lomba/schema_plus to read more. 
+Also very cool SchemaValidations[https://github.com/lomba/schema_validations]
+and SchemaAssociations[https://github.com/lomba/schema_associations] gems are built
+on SchemaPlus.
+
+Although automatic_foreign_key is deprecated, potential bugs will be fixed at least until the end of 2011.
+
 === Installation
 
     gem install automatic_foreign_key
@@ -175,8 +187,7 @@ http://groups.google.com/group/rails-db
 
 === NOTE
 
-* Code was created by harukizaemon(http://github.com/harukizaemon) but is not supported currently by him.
-* Former name was foreign_key_migrations
+* Former name was foreign_key_migrations by harukizaemon.
 
 === License
 
