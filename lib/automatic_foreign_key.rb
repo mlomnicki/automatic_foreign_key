@@ -5,6 +5,8 @@ rescue
   require 'redhillonrails_core'
 end
 
+ActiveSupport::Deprecation.warn("[automatic_foreign_key] AutomaticForeignKey gem is deprecated. Please use https://github.com/lomba/schema_plus.git")
+
 require 'automatic_foreign_key/version'
 
 module AutomaticForeignKey
